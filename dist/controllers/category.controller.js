@@ -1,10 +1,12 @@
-import { successResponse } from "../utils/response";
-import { createCategoryService, deleteCategoryService, getAllCategoriesService, updateCategoryService, } from "../services/category.service";
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const response_1 = require("../utils/response");
+const category_service_1 = require("../services/category.service");
 class CategoryController {
     async getAllCategories(req, res, next) {
         try {
-            const getAllCategories = await getAllCategoriesService();
-            successResponse(res, "Success", getAllCategories);
+            const getAllCategories = await (0, category_service_1.getAllCategoriesService)();
+            (0, response_1.successResponse)(res, "Success", getAllCategories);
         }
         catch (error) {
             next(error);
@@ -13,8 +15,8 @@ class CategoryController {
     async createCategory(req, res, next) {
         try {
             const { name } = req.body;
-            const createCategory = await createCategoryService(name);
-            successResponse(res, "Kategori berhasil dibuat", createCategory);
+            const createCategory = await (0, category_service_1.createCategoryService)(name);
+            (0, response_1.successResponse)(res, "Kategori berhasil dibuat", createCategory);
         }
         catch (error) {
             next(error);
@@ -24,8 +26,8 @@ class CategoryController {
         try {
             const { name } = req.body;
             const { id } = req.params;
-            const updateCategory = await updateCategoryService(parseFloat(id), name);
-            successResponse(res, "Kategori berhasil diupdate", updateCategory);
+            const updateCategory = await (0, category_service_1.updateCategoryService)(parseFloat(id), name);
+            (0, response_1.successResponse)(res, "Kategori berhasil diupdate", updateCategory);
         }
         catch (error) {
             next(error);
@@ -34,12 +36,12 @@ class CategoryController {
     async deleteCategory(req, res, next) {
         try {
             const { id } = req.params;
-            const deleteCategory = await deleteCategoryService(parseFloat(id));
-            successResponse(res, "Kategori berhasil dihapus", deleteCategory);
+            const deleteCategory = await (0, category_service_1.deleteCategoryService)(parseFloat(id));
+            (0, response_1.successResponse)(res, "Kategori berhasil dihapus", deleteCategory);
         }
         catch (error) {
             next(error);
         }
     }
 }
-export default CategoryController;
+exports.default = CategoryController;
