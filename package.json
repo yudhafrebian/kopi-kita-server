@@ -2,7 +2,7 @@
   "name": "kopikita-server",
   "version": "1.0.0",
   "type": "module",
-  "main": "index.ts",
+  "main": "dist/index.js",
   "scripts": {
     "dev": "nodemon src/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
