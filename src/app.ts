@@ -3,6 +3,7 @@ import cors from "cors";
 import prisma from "./configs/prisma";
 import CategoryRouter from "./routers/category.router";
 import ProductRouter from "./routers/product.router";
+import AdminRouter from "./routers/admin.router";
 
 const port = process.env.PORT || 3000;
 
@@ -25,11 +26,13 @@ class App {
   private routes() {
     const categoryRouter = new CategoryRouter();
     const productRouter = new ProductRouter();
+    const adminRouter = new AdminRouter();
     this.app.get("/", (req: Request, res: Response) => {
       res.status(200).send("Base API");
     });
     this.app.use("/categories", categoryRouter.getRouter());
     this.app.use("/products", productRouter.getRouter());
+    this.app.use("/auth", adminRouter.getRouter());
   }
 
   private errorHandler() {
