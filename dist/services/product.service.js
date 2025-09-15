@@ -7,9 +7,10 @@ exports.deleteProductService = exports.updateProductService = exports.createProd
 const cloudinary_1 = require("../configs/cloudinary");
 const prisma_1 = __importDefault(require("../configs/prisma"));
 const node_cache_1 = __importDefault(require("node-cache"));
+const cache = new node_cache_1.default({ stdTTL: 60 });
 const getAllProductsService = async (category) => {
-    const cache = new node_cache_1.default({ stdTTL: 60 });
-    const cacheData = cache.get("cacheKey");
+    const cacheKey = category ? `products/all:${category}` : "products/all";
+    const cacheData = cache.get(cacheKey);
     if (cacheData)
         return cacheData;
     const whereClause = { deleted_at: null };
@@ -21,7 +22,7 @@ const getAllProductsService = async (category) => {
         include: { categories: true },
         orderBy: { name: "asc" },
     });
-    cache.set("cacheKey", products);
+    cache.set(cacheKey, products);
     return products;
 };
 exports.getAllProductsService = getAllProductsService;
