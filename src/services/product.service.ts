@@ -1,12 +1,14 @@
 import { cloudUpload } from "../configs/cloudinary";
 import prisma from "../configs/prisma";
 import { Products } from "../types/products.type";
-import NodeChace from "node-cache";
+import NodeCache  from "node-cache";
+const cache = new NodeCache ({ stdTTL: 60 });
 
 export const getAllProductsService = async (category: string) => {
-  const cache = new NodeChace({ stdTTL: 60 });
 
-  const cacheData = cache.get("cacheKey");
+  const cacheKey = category ? `products/all:${category}` : "products/all";
+
+  const cacheData = cache.get(cacheKey);
   if (cacheData) return cacheData;
 
   const whereClause: any = { deleted_at: null };
@@ -19,7 +21,7 @@ export const getAllProductsService = async (category: string) => {
     orderBy: { name: "asc" },
   });
 
-  cache.set("cacheKey", products);
+  cache.set(cacheKey, products);
   return products;
 };
 
