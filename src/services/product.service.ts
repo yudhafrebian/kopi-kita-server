@@ -2,7 +2,7 @@ import { cloudUpload } from "../configs/cloudinary";
 import prisma from "../configs/prisma";
 import { Products } from "../types/products.type";
 import NodeCache from "node-cache";
-const cache = new NodeCache({ stdTTL: 60 });
+const cache = new NodeCache({ stdTTL: 60 * 5 });
 
 export const getAllProductsService = async (category: string) => {
   const cacheKey = category ? `products/all:${category}` : "products/all";

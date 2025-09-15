@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
+const compression_1 = __importDefault(require("compression"));
 const prisma_1 = __importDefault(require("./configs/prisma"));
 const category_router_1 = __importDefault(require("./routers/category.router"));
 const product_router_1 = __importDefault(require("./routers/product.router"));
@@ -19,6 +20,7 @@ class App {
     }
     configure() {
         this.app.use((0, cors_1.default)());
+        this.app.use((0, compression_1.default)());
         this.app.use(express_1.default.urlencoded({ extended: true }));
         this.app.use(express_1.default.json());
     }

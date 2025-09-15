@@ -1,5 +1,6 @@
 import express, { Application, NextFunction, Request, Response } from "express";
 import cors from "cors";
+import compression from "compression";
 import prisma from "./configs/prisma";
 import CategoryRouter from "./routers/category.router";
 import ProductRouter from "./routers/product.router";
@@ -19,6 +20,7 @@ class App {
 
   private configure() {
     this.app.use(cors());
+    this.app.use(compression());
     this.app.use(express.urlencoded({ extended: true }));
     this.app.use(express.json());
   }

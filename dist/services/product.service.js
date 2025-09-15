@@ -7,7 +7,7 @@ exports.deleteProductService = exports.updateProductService = exports.createProd
 const cloudinary_1 = require("../configs/cloudinary");
 const prisma_1 = __importDefault(require("../configs/prisma"));
 const node_cache_1 = __importDefault(require("node-cache"));
-const cache = new node_cache_1.default({ stdTTL: 60 });
+const cache = new node_cache_1.default({ stdTTL: 60 * 5 });
 const getAllProductsService = async (category) => {
     const cacheKey = category ? `products/all:${category}` : "products/all";
     const cacheData = cache.get(cacheKey);
