@@ -1,17 +1,26 @@
 import { cloudUpload } from "../configs/cloudinary";
 import prisma from "../configs/prisma";
 import { Products } from "../types/products.type";
+import NodeChace from "node-cache";
 
 export const getAllProductsService = async (category: string) => {
+  const cache = new NodeChace({ stdTTL: 60 });
+
+  const cacheData = cache.get("cacheKey");
+  if (cacheData) return cacheData;
+
   const whereClause: any = { deleted_at: null };
   if (category) {
     whereClause.categories = { slug: category };
   }
-  return await prisma.menu_items.findMany({
+  const products = await prisma.menu_items.findMany({
     where: whereClause,
     include: { categories: true },
     orderBy: { name: "asc" },
   });
+
+  cache.set("cacheKey", products);
+  return products;
 };
 
 export const createProductService = async (
@@ -24,4 +33,28 @@ export const createProductService = async (
   }
   const newProduct = await prisma.menu_items.create({ data: input });
   return newProduct;
+};
+
+export const updateProductService = async (
+  id: number,
+  input: Products,
+  file?: Express.Multer.File
+) => {
+  if (file) {
+    const upload = await cloudUpload(file);
+    input.image_url = upload.secure_url;
+  }
+  const updateProduct = await prisma.menu_items.update({
+    where: { id },
+    data: input,
+  });
+  return updateProduct;
+};
+
+export const deleteProductService = async (id: number) => {
+  const deleteProduct = await prisma.menu_items.update({
+    where: { id },
+    data: { deleted_at: new Date() },
+  });
+  return deleteProduct;
 };

@@ -36,6 +36,7 @@
     "jest-mock-extended": "^4.0.0",
     "jsonwebtoken": "^9.0.2",
     "multer": "^2.0.2",
+    "node-cache": "^5.1.2",
     "prisma": "^6.13.0",
     "streamifier": "^0.1.1",
     "supertest": "^7.1.4",

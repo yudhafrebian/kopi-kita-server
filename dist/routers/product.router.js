@@ -15,6 +15,7 @@ class ProductRouter {
     initializeRoutes() {
         this.route.get("/all", this.productController.getAllProducts);
         this.route.post("/create", (0, uploader_1.uploaderMemory)().single("image_url"), this.productController.createProduct);
+        this.route.patch("/update/:id", (0, uploader_1.uploaderMemory)().single("image_url"), this.productController.updateProduct);
     }
     getRouter() {
         return this.route;

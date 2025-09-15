@@ -17,6 +17,11 @@ class ProductRouter {
       uploaderMemory().single("image_url"),
       this.productController.createProduct
     );
+    this.route.patch(
+      "/update/:id",
+      uploaderMemory().single("image_url"),
+      this.productController.updateProduct
+    );
   }
   public getRouter(): Router {
     return this.route;

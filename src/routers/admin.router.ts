@@ -18,6 +18,7 @@ class AdminRouter {
     this.route.get("/all", this.adminController.getAllAdmin);
     this.route.get("/keep-login", verifyToken, this.adminController.keepLogin);
     this.route.patch("/update/:id",verifyToken, this.adminController.updateAdmin);
+    this.route.patch("/delete/:id",verifyToken, this.adminController.deleteAdmin);
   }
 
   public getRouter(): Router {

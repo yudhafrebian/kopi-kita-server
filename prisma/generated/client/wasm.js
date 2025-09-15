@@ -125,7 +125,8 @@ exports.Prisma.AdminScalarFieldEnum = {
   name: 'name',
   email: 'email',
   password_hash: 'password_hash',
-  created_at: 'created_at'
+  created_at: 'created_at',
+  deleted_at: 'deleted_at'
 };
 
 exports.Prisma.CategoriesScalarFieldEnum = {

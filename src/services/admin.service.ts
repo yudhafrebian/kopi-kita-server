@@ -5,7 +5,9 @@ import { AdminResponse } from "../types/admin.type";
 import { hashPassword } from "../utils/hashPassword";
 
 export const getAllAdminService = async () => {
-  return await prisma.admin.findMany();
+  return await prisma.admin.findMany({
+    where: { deleted_at: null }
+  });
 };
 
 export const signInService = async (email: string, password: string) => {
@@ -42,7 +44,7 @@ export const signUpService = async (
   password_hash: string
 ) => {
   const isExist = await prisma.admin.findUnique({
-    where: { email },
+    where: { email, deleted_at: null },
   });
 
   if (isExist) {
@@ -92,7 +94,7 @@ export const updateAdminService = async (
   email: string
 ) => {
   const updateAdmin = await prisma.admin.update({
-    where: { id: userId },
+    where: { id: userId, deleted_at: null },
     data: {
       name,
       email,
@@ -100,3 +102,13 @@ export const updateAdminService = async (
   });
   return updateAdmin;
 };
+
+export const deleteAdminService = async (userId: number) => {
+  const deleteAdmin = await prisma.admin.update({
+    where: { id: userId, deleted_at: null },
+    data: {
+      deleted_at: new Date(),
+    },
+  });
+  return deleteAdmin;
+}

@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import { createResponse, successResponse } from "../utils/response";
 import {
+  deleteAdminService,
   getAllAdminService,
   keepLoginService,
   signInService,
@@ -58,6 +59,16 @@ class AdminController {
       const { name, email } = req.body;
       const updateAdmin = await updateAdminService(userId, name, email);
       successResponse(res, "Success", updateAdmin);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async deleteAdmin(req: Request, res: Response, next: NextFunction): Promise<void> {
+    try {
+      const userId = res.locals.data.id;
+      const deleteAdmin = await deleteAdminService(userId);
+      successResponse(res, "Success", deleteAdmin);
     } catch (error) {
       next(error);
     }
