@@ -2,7 +2,6 @@ import { cloudUpload } from "../configs/cloudinary";
 import prisma from "../configs/prisma";
 import { Products } from "../types/products.type";
 import NodeCache from "node-cache";
-import { v2 as cloudinary } from "cloudinary";
 const cache = new NodeCache({ stdTTL: 60 });
 
 export const getAllProductsService = async (category: string) => {
@@ -23,12 +22,7 @@ export const getAllProductsService = async (category: string) => {
 
   const optimized = products.map((p) => ({
     ...p,
-    image_url: cloudinary.url(p.image_url, {
-      transformation: {
-        fetch_format: "auto",
-        quality: "auto",
-      },
-    }),
+    image_url: p.image_url.replace("/upload/", "/upload/f_auto,q_auto/"),
   }));
 
   cache.set(cacheKey, optimized);

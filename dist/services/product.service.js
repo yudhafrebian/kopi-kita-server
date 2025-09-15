@@ -7,7 +7,6 @@ exports.deleteProductService = exports.updateProductService = exports.createProd
 const cloudinary_1 = require("../configs/cloudinary");
 const prisma_1 = __importDefault(require("../configs/prisma"));
 const node_cache_1 = __importDefault(require("node-cache"));
-const cloudinary_2 = require("cloudinary");
 const cache = new node_cache_1.default({ stdTTL: 60 });
 const getAllProductsService = async (category) => {
     const cacheKey = category ? `products/all:${category}` : "products/all";
@@ -25,12 +24,7 @@ const getAllProductsService = async (category) => {
     });
     const optimized = products.map((p) => ({
         ...p,
-        image_url: cloudinary_2.v2.url(p.image_url, {
-            transformation: {
-                fetch_format: "auto",
-                quality: "auto",
-            },
-        }),
+        image_url: p.image_url.replace("/upload/", "/upload/f_auto,q_auto/"),
     }));
     cache.set(cacheKey, optimized);
     return optimized;
