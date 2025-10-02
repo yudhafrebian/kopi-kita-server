@@ -17,6 +17,7 @@ class ProductRouter {
         this.route.get("/all/:id", this.productController.getProductDetails);
         this.route.post("/create", (0, uploader_1.uploaderMemory)().single("image_url"), this.productController.createProduct);
         this.route.patch("/update/:id", (0, uploader_1.uploaderMemory)().single("image_url"), this.productController.updateProduct);
+        this.route.patch("/delete/:id", this.productController.deleteProduct);
     }
     getRouter() {
         return this.route;

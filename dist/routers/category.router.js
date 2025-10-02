@@ -13,8 +13,9 @@ class CategoryRouter {
     }
     inizializeRoutes() {
         this.route.get("/all", this.categoryController.getAllCategories);
+        this.route.get("/all/:id", this.categoryController.getCategoryDetails);
         this.route.post("/create", this.categoryController.createCategory);
-        this.route.post("/delete/:id", this.categoryController.deleteCategory);
+        this.route.patch("/delete/:id", this.categoryController.deleteCategory);
         this.route.patch("/update/:id", this.categoryController.updateCategory);
     }
     getRouter() {

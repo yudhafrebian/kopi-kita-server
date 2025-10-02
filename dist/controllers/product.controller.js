@@ -36,7 +36,7 @@ class ProductController {
                 category_id: Number(category_id),
                 created_at: new Date(),
             }, req.file);
-            (0, response_1.successResponse)(res, "Success", createProduct);
+            (0, response_1.successResponse)(res, "Produk berhasil dibuat", createProduct);
         }
         catch (error) {
             next(error);
@@ -55,7 +55,17 @@ class ProductController {
                 category_id: Number(category_id),
                 created_at: new Date(),
             }, req.file);
-            (0, response_1.successResponse)(res, "Success", updateProduct);
+            (0, response_1.successResponse)(res, "Produk berhasil diperbarui", updateProduct);
+        }
+        catch (error) {
+            next(error);
+        }
+    }
+    async deleteProduct(req, res, next) {
+        try {
+            const { id } = req.params;
+            const deleteProduct = await (0, product_service_1.deleteProductService)(Number(id));
+            (0, response_1.successResponse)(res, "Produk berhasil dihapus", deleteProduct);
         }
         catch (error) {
             next(error);

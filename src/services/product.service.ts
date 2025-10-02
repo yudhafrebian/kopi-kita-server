@@ -46,6 +46,12 @@ export const createProductService = async (
     input.image_url = upload.secure_url;
   }
   const newProduct = await prisma.menu_items.create({ data: input });
+
+  cache.del("products/all");
+  cache.keys().forEach((key) => {
+    if (key.startsWith("products/all:")) cache.del(key);
+  });
+
   return newProduct;
 };
 
@@ -62,6 +68,12 @@ export const updateProductService = async (
     where: { id },
     data: input,
   });
+
+  cache.del("products/all");
+  cache.keys().forEach((key) => {
+    if (key.startsWith("products/all:")) cache.del(key);
+  });
+
   return updateProduct;
 };
 
@@ -70,5 +82,11 @@ export const deleteProductService = async (id: number) => {
     where: { id },
     data: { deleted_at: new Date() },
   });
+
+  cache.del("products/all");
+  cache.keys().forEach((key) => {
+    if (key.startsWith("products/all:")) cache.del(key);
+  });
+
   return deleteProduct;
 };

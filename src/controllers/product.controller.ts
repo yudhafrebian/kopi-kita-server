@@ -1,6 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import {
   createProductService,
+  deleteProductService,
   getAllProductsService,
   getProductDetailservice,
   updateProductService,
@@ -58,7 +59,7 @@ class ProductController {
         },
         req.file
       );
-      successResponse(res, "Success", createProduct);
+      successResponse(res, "Produk berhasil dibuat", createProduct);
     } catch (error) {
       next(error);
     }
@@ -86,7 +87,17 @@ class ProductController {
         },
         req.file
       );
-      successResponse(res, "Success", updateProduct);
+      successResponse(res, "Produk berhasil diperbarui", updateProduct);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async deleteProduct(req: Request, res: Response, next: NextFunction) {
+    try {
+      const { id } = req.params;
+      const deleteProduct = await deleteProductService(Number(id));
+      successResponse(res, "Produk berhasil dihapus", deleteProduct);
     } catch (error) {
       next(error);
     }

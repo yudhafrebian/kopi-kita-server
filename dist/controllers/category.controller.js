@@ -12,6 +12,16 @@ class CategoryController {
             next(error);
         }
     }
+    async getCategoryDetails(req, res, next) {
+        try {
+            const { id } = req.params;
+            const getCategoryDetails = await (0, category_service_1.getCategoryDetail)(Number(id));
+            (0, response_1.successResponse)(res, "Success", { getCategoryDetails });
+        }
+        catch (error) {
+            next(error);
+        }
+    }
     async createCategory(req, res, next) {
         try {
             const { name } = req.body;

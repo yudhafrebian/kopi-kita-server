@@ -27,6 +27,7 @@ class ProductRouter {
       uploaderMemory().single("image_url"),
       this.productController.updateProduct
     );
+    this.route.patch("/delete/:id", this.productController.deleteProduct);
   }
   public getRouter(): Router {
     return this.route;

@@ -4,6 +4,7 @@ import {
   createCategoryService,
   deleteCategoryService,
   getAllCategoriesService,
+  getCategoryDetail,
   updateCategoryService,
 } from "../services/category.service";
 
@@ -16,6 +17,20 @@ class CategoryController {
     try {
       const getAllCategories = await getAllCategoriesService();
       successResponse(res, "Success", getAllCategories);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async getCategoryDetails(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> {
+    try {
+      const { id } = req.params;
+      const getCategoryDetails = await getCategoryDetail(Number(id));
+      successResponse(res, "Success", { getCategoryDetails });
     } catch (error) {
       next(error);
     }
