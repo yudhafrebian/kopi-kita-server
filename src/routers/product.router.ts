@@ -12,10 +12,9 @@ class ProductRouter {
     this.initializeRoutes();
   }
   private initializeRoutes(): void {
-    this.route.get("/all", verifyToken, this.productController.getAllProducts);
+    this.route.get("/all", this.productController.getAllProducts);
     this.route.get(
       "/all/:id",
-      verifyToken,
       this.productController.getProductDetails
     );
     this.route.post(
