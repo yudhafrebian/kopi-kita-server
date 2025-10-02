@@ -14,6 +14,16 @@ class ProductController {
             next(error);
         }
     }
+    async getProductDetails(req, res, next) {
+        try {
+            const { id } = req.params;
+            const getProductDetails = await (0, product_service_1.getProductDetailservice)(Number(id));
+            (0, response_1.successResponse)(res, "Success", { getProductDetails });
+        }
+        catch (error) {
+            next(error);
+        }
+    }
     async createProduct(req, res, next) {
         try {
             const { name, description, price, image_url, category_id } = req.body;

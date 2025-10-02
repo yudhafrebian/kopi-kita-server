@@ -1,6 +1,7 @@
 import { Router } from "express";
 import ProductController from "../controllers/product.controller";
 import { uploaderMemory } from "../middleware/uploader";
+import { verifyToken } from "../middleware/token";
 
 class ProductRouter {
   private route: Router;
@@ -11,7 +12,12 @@ class ProductRouter {
     this.initializeRoutes();
   }
   private initializeRoutes(): void {
-    this.route.get("/all", this.productController.getAllProducts);
+    this.route.get("/all", verifyToken, this.productController.getAllProducts);
+    this.route.get(
+      "/all/:id",
+      verifyToken,
+      this.productController.getProductDetails
+    );
     this.route.post(
       "/create",
       uploaderMemory().single("image_url"),

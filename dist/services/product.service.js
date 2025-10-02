@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.deleteProductService = exports.updateProductService = exports.createProductService = exports.getAllProductsService = void 0;
+exports.deleteProductService = exports.updateProductService = exports.createProductService = exports.getProductDetailservice = exports.getAllProductsService = void 0;
 const cloudinary_1 = require("../configs/cloudinary");
 const prisma_1 = __importDefault(require("../configs/prisma"));
 const node_cache_1 = __importDefault(require("node-cache"));
@@ -30,6 +30,14 @@ const getAllProductsService = async (category) => {
     return optimized;
 };
 exports.getAllProductsService = getAllProductsService;
+const getProductDetailservice = async (id) => {
+    const product = await prisma_1.default.menu_items.findUnique({
+        where: { id, deleted_at: null },
+        include: { categories: true },
+    });
+    return product;
+};
+exports.getProductDetailservice = getProductDetailservice;
 const createProductService = async (input, file) => {
     if (file) {
         const upload = await (0, cloudinary_1.cloudUpload)(file);

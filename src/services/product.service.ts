@@ -29,6 +29,14 @@ export const getAllProductsService = async (category: string) => {
   return optimized;
 };
 
+export const getProductDetailservice = async (id: number) => {
+  const product = await prisma.menu_items.findUnique({
+    where: { id, deleted_at: null },
+    include: { categories: true },
+  });
+  return product;
+};
+
 export const createProductService = async (
   input: Products,
   file?: Express.Multer.File

@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import {
   createProductService,
   getAllProductsService,
+  getProductDetailservice,
   updateProductService,
 } from "../services/product.service";
 import { successResponse } from "../utils/response";
@@ -18,6 +19,20 @@ class ProductController {
       const { category } = req.query;
       const getAllProducts = await getAllProductsService(category as string);
       successResponse(res, "Success", getAllProducts);
+    } catch (error) {
+      next(error);
+    }
+  }
+
+  async getProductDetails(
+    req: Request,
+    res: Response,
+    next: NextFunction
+  ): Promise<void> {
+    try {
+      const { id } = req.params;
+      const getProductDetails = await getProductDetailservice(Number(id));
+      successResponse(res, "Success", { getProductDetails });
     } catch (error) {
       next(error);
     }

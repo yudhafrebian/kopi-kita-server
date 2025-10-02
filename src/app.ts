@@ -5,6 +5,7 @@ import prisma from "./configs/prisma";
 import CategoryRouter from "./routers/category.router";
 import ProductRouter from "./routers/product.router";
 import AdminRouter from "./routers/admin.router";
+import DashboardRouter from "./routers/dashboard.router";
 
 const port = process.env.PORT || 3000;
 
@@ -29,12 +30,14 @@ class App {
     const categoryRouter = new CategoryRouter();
     const productRouter = new ProductRouter();
     const adminRouter = new AdminRouter();
+    const dashboardRouter = new DashboardRouter();
     this.app.get("/", (req: Request, res: Response) => {
       res.status(200).send("Base API");
     });
     this.app.use("/categories", categoryRouter.getRouter());
     this.app.use("/products", productRouter.getRouter());
     this.app.use("/auth", adminRouter.getRouter());
+    this.app.use("/dashboard", dashboardRouter.getRouter());
   }
 
   private errorHandler() {
